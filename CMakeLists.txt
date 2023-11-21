@@ -31,7 +31,8 @@ ament_target_dependencies(thruster_manager_lib rclcpp urdf tf2_ros sensor_msgs g
 # rviz_bridge to display thruster wrenches
 add_executable(publish_wrenches src/publish_wrenches.cpp)
 target_include_directories(publish_wrenches PUBLIC include ${EIGEN3_INCLUDE_DIRS})
-target_link_libraries(publish_wrenches thruster_manager "${cpp_typesupport_target}")
+ament_target_dependencies(publish_wrenches rclcpp urdf tf2_ros sensor_msgs geometry_msgs kdl_parser rclcpp_components)
+target_link_libraries(publish_wrenches thruster_manager_lib "${cpp_typesupport_target}")
 
 if(NOT WIN32)
   ament_environment_hooks(
