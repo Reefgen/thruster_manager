@@ -105,6 +105,21 @@ ThrusterManager::Vector6d ThrusterManager::maxWrench() const
   return wrench;
 }
 
+ThrusterManager::Vector6d ThrusterManager::minWrench() const
+{
+  Vector6d wrench;
+  wrench.setZero();
+  const auto thrust{fmin};
+
+  for(size_t dir = 0; dir < 6; ++dir)
+  {
+    for(uint thr = 0; thr < dofs; ++thr)
+      wrench(dir) += thrust * tam(dir, thr);
+  }
+  return wrench;
+}
+
+//ThrusterManager::Vector6d ThrusterManager::comandableWrenchBounds
 
 Eigen::VectorXd ThrusterManager::solveWrench(const Vector6d &wrench, Limits limits)
 {

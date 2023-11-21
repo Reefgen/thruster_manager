@@ -5,6 +5,7 @@
 #include <geometry_msgs/msg/wrench_stamped.hpp>
 #include <thruster_manager/thruster_link.h>
 #include <Eigen/Core>
+//#include <thruster_manager/srv/commandable_wrench_bounds.hpp>
 
 namespace thruster_manager
 {
@@ -46,6 +47,7 @@ public:
   // compute the max components of the wrench, assuming min/max thrust are non-0
   // useful for anti-windup in higher-level control
   Vector6d maxWrench() const;
+  Vector6d minWrench() const;
 
 private:
 
