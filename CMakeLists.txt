@@ -24,9 +24,9 @@ endif()
 
 
 # thruster manager as a library / composition node
-add_library(thruster_manager SHARED src/thruster_manager.cpp src/thruster_manager_node.cpp)
-target_include_directories(thruster_manager PUBLIC include ${EIGEN3_INCLUDE_DIRS})
-ament_target_dependencies(thruster_manager rclcpp urdf tf2_ros sensor_msgs geometry_msgs kdl_parser rclcpp_components)
+add_library(thruster_manager_lib SHARED src/thruster_manager.cpp src/thruster_manager_node.cpp)
+target_include_directories(thruster_manager_lib PUBLIC include ${EIGEN3_INCLUDE_DIRS})
+ament_target_dependencies(thruster_manager_lib rclcpp urdf tf2_ros sensor_msgs geometry_msgs kdl_parser rclcpp_components)
 
 # rviz_bridge to display thruster wrenches
 add_executable(publish_wrenches src/publish_wrenches.cpp)
@@ -40,11 +40,11 @@ if(NOT WIN32)
 endif()
 
 # auto-executable from node
-rclcpp_components_register_node(thruster_manager
+rclcpp_components_register_node(thruster_manager_lib
   PLUGIN "thruster_manager::ThrusterManagerNode"
   EXECUTABLE thruster_manager_node)
 
-install(TARGETS thruster_manager publish_wrenches
+install(TARGETS thruster_manager_lib publish_wrenches
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION lib/${PROJECT_NAME})
