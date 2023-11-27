@@ -1,5 +1,6 @@
 #include <thruster_manager/thruster_manager_node.h>
 #include <geometry_msgs/msg/wrench_stamped.hpp>
+#include "thruster_manager/thruster_manager/srv/wrench_limits.hpp"
 
 using namespace thruster_manager;
 

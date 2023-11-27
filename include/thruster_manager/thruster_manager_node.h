@@ -6,6 +6,7 @@
 #include <std_msgs/msg/float64.hpp>
 #include <geometry_msgs/msg/wrench.hpp>
 #include <thruster_manager/thruster_manager.h>
+#include "thruster_manager/thruster_manager/srv/wrench_limits.hpp"
 
 namespace thruster_manager
 {
@@ -23,6 +24,8 @@ private:
 
   ThrusterManager allocator;
   size_t dofs;
+
+  //bool wrenchLimitsCallback(thruster_manager::srv::WrenchLimits::Request&, thruster_manager::srv::WrenchLimis::Response&);
 
   rclcpp::SubscriptionBase::SharedPtr wrench_sub;
   void solve(const Wrench &wrench);

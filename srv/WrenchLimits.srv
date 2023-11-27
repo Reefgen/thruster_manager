@@ -1,0 +1,3 @@
+---
+geometry_msgs/Wrench upper_limit
+geometry_msgs/Wrench lower_limit

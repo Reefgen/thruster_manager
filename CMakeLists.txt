@@ -51,7 +51,7 @@ install(TARGETS thruster_manager_lib publish_wrenches
   RUNTIME DESTINATION lib/${PROJECT_NAME})
 
 rosidl_generate_interfaces(${PROJECT_NAME}
-  "srv/CommandableWrenchBounds.srv"
+  "srv/WrenchLimits.srv"
   DEPENDENCIES geometry_msgs
 )
 

@@ -5,7 +5,7 @@
 #include <geometry_msgs/msg/wrench_stamped.hpp>
 #include <thruster_manager/thruster_link.h>
 #include <Eigen/Core>
-//#include <thruster_manager/srv/commandable_wrench_bounds.hpp>
+//#include "thruster_manager/srv/wrench_limits.hpp"
 
 namespace thruster_manager
 {
