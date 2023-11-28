@@ -1,3 +1,0 @@
----
-geometry_msgs/Wrench maxwrench
-geometry_msgs/Wrench minwrench

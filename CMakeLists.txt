@@ -15,7 +15,6 @@ find_package(urdf REQUIRED)
 find_package(kdl_parser REQUIRED)
 find_package(Eigen3 REQUIRED)
 find_package(rclcpp_components REQUIRED)
-find_package(rosidl_default_generators REQUIRED)
 
 # Default to C++17
 if(NOT CMAKE_CXX_STANDARD)
@@ -32,7 +31,7 @@ ament_target_dependencies(thruster_manager_lib rclcpp urdf tf2_ros sensor_msgs g
 add_executable(publish_wrenches src/publish_wrenches.cpp)
 target_include_directories(publish_wrenches PUBLIC include ${EIGEN3_INCLUDE_DIRS})
 ament_target_dependencies(publish_wrenches rclcpp urdf tf2_ros sensor_msgs geometry_msgs kdl_parser rclcpp_components)
-target_link_libraries(publish_wrenches thruster_manager_lib "${cpp_typesupport_target}")
+target_link_libraries(publish_wrenches thruster_manager_lib)
 
 if(NOT WIN32)
   ament_environment_hooks(
@@ -50,12 +49,6 @@ install(TARGETS thruster_manager_lib publish_wrenches
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION lib/${PROJECT_NAME})
 
-rosidl_generate_interfaces(${PROJECT_NAME}
-  "srv/WrenchLimits.srv"
-  DEPENDENCIES geometry_msgs
-)
-
-rosidl_get_typesupport_target(cpp_typesupport_target "${PROJECT_NAME}" "rosidl_typesupport_cpp")
 
 # allow using the class in another package
 # legacy include dir + nested since Humble
@@ -64,6 +57,5 @@ install(DIRECTORY include/ DESTINATION include/${PROJECT_NAME})
 
 ament_export_libraries(thruster_manager)
 ament_export_include_directories(include)
-ament_export_dependencies(rosidl_default_runtime)
 
 ament_package()
