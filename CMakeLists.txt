@@ -26,7 +26,7 @@ endif()
 # thruster manager as a library / composition node
 add_library(thruster_manager_lib SHARED src/thruster_manager.cpp src/thruster_manager_node.cpp)
 target_include_directories(thruster_manager_lib PUBLIC include ${EIGEN3_INCLUDE_DIRS})
-ament_target_dependencies(thruster_manager_lib rclcpp urdf tf2_ros sensor_msgs geometry_msgs kdl_parser rclcpp_components)
+ament_target_dependencies(thruster_manager_lib rclcpp urdf tf2_ros sensor_msgs geometry_msgs kdl_parser rclcpp_components std_msgs)
 
 # rviz_bridge to display thruster wrenches
 add_executable(publish_wrenches src/publish_wrenches.cpp)

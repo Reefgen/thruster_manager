@@ -114,7 +114,7 @@ ThrusterManager::Vector6d ThrusterManager::minWrench() const
   for(size_t dir = 0; dir < 6; ++dir)
   {
     for(uint thr = 0; thr < dofs; ++thr)
-      wrench(dir) += thrust * tam(dir, thr);
+      wrench(dir) += thrust * std::abs(tam(dir, thr));
   }
   return wrench;
 }

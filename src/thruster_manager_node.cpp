@@ -1,6 +1,8 @@
 #include <thruster_manager/thruster_manager_node.h>
 #include <geometry_msgs/msg/wrench_stamped.hpp>
-#include "thruster_manager/thruster_manager/srv/wrench_limits.hpp"
+
+using std::placeholders::_1;
+using namespace std::chrono_literals;
 
 using namespace thruster_manager;
 
@@ -53,6 +55,16 @@ ThrusterManagerNode::ThrusterManagerNode(rclcpp::NodeOptions options)
       solve(*msg);
     });
   }
+
+  max_wrench_pub = this -> create_publisher<std_msgs::msg::Float64MultiArray>("max_wrench", 10);
+  max_wrench_array.resize(6);
+  std::fill(max_wrench_array.begin(),max_wrench_array.end(),0);
+
+  min_wrench_pub = this -> create_publisher<std_msgs::msg::Float64MultiArray>("min_wrench", 10);
+  min_wrench_array.resize(6);
+  std::fill(min_wrench_array.begin(),min_wrench_array.end(),0);
+
+  timer = this->create_wall_timer(50ms, std::bind(&ThrusterManagerNode::timer_callback, this));
 }
 
 
@@ -86,6 +98,23 @@ void ThrusterManagerNode::solve(const Wrench &wrench)
   }
 }
 
+void ThrusterManagerNode::timer_callback()
+{
+  ThrusterManager::Vector6d max_temp = allocator.maxWrench();
+  ThrusterManager::Vector6d min_temp = allocator.minWrench();
+  for(uint i=0; i<6; i++)
+  {
+    max_wrench_array[i] = max_temp[i];
+    min_wrench_array[i] = min_temp[i];
+
+  }
+  std_msgs::msg::Float64MultiArray max_wrench_msg;
+  std_msgs::msg::Float64MultiArray min_wrench_msg;
+  max_wrench_msg.set__data(max_wrench_array);
+  min_wrench_msg.set__data(min_wrench_array);
+  max_wrench_pub->publish(max_wrench_msg);
+  min_wrench_pub->publish(min_wrench_msg);
+}
 
 #include "rclcpp_components/register_node_macro.hpp"
 

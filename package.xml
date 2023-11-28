@@ -21,6 +21,7 @@
   <depend>urdfdom</depend>
   <depend>tf2_ros</depend>
   <depend>thruster_manager_msgs</depend>
+  <depend>std_msgs</depend>
 
   <export>
     <build_type>ament_cmake</build_type>
