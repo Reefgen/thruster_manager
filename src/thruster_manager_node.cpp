@@ -1,5 +1,8 @@
 #include <thruster_manager/thruster_manager_node.h>
 #include <geometry_msgs/msg/wrench_stamped.hpp>
+#include <cstdio>
+#include <iostream>
+#include <functional>
 
 using std::placeholders::_1;
 using namespace std::chrono_literals;
@@ -77,8 +80,24 @@ void ThrusterManagerNode::solve(const Wrench &wrench)
   F(3) = wrench.torque.x;
   F(4) = wrench.torque.y;
   F(5) = wrench.torque.z;
+ // std::cout <<"force x: "<<F(0)<<std::endl;
+  //std::cout <<"force y: "<<F(1)<<std::endl;
+  //std::cout <<"force z: "<<F(2)<<std::endl;
+  //std::cout <<"torque x: "<<F(3)<<std::endl;
+  //std::cout <<"torque y: "<<F(4)<<std::endl;
+  //std::cout <<"torque z: "<<F(5)<<std::endl;
+  
 
   const auto thrusts{allocator.solveWrench(F)};
+  //std::cout <<"thrust 1: "<<thrusts(0)<<std::endl;
+  //std::cout <<"thrust 2: "<<thrusts(1)<<std::endl;
+  //std::cout <<"thrust 3: "<<thrusts(2)<<std::endl;
+  //std::cout <<"thrust 4: "<<thrusts(3)<<std::endl;
+  //std::cout <<"thrust 5: "<<thrusts(4)<<std::endl;
+  //std::cout <<"thrust 6: "<<thrusts(5)<<std::endl;
+  //std::cout <<"thrust 7: "<<thrusts(6)<<std::endl;
+  //std::cout <<"thrust 8: "<<thrusts(7)<<std::endl;
+  
 
   if(cmd_js_pub)
   {

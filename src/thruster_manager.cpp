@@ -1,5 +1,8 @@
 #include <thruster_manager/thruster_manager.h>
 #include <thruster_manager/model_parser.h>
+#include <cstdio>
+#include <iostream>
+#include <functional>
 
 using namespace thruster_manager;
 using namespace std;
@@ -87,7 +90,15 @@ std::vector<ThrusterLink> ThrusterManager::parseRobotDescription(rclcpp::Node* n
   }
 
   computeKernel();
-
+  std::cout << "thruster allocation matrix:\n";
+  for(uint i=0; i<6; i++)
+  {
+    for(uint j=0; j<dofs; j++)
+    {
+      std::cout<<"\t" <<tam(i,j);
+    }
+    cout<<endl;
+  }
   return links;
 }
 
@@ -107,16 +118,16 @@ ThrusterManager::Vector6d ThrusterManager::maxWrench() const
 
 ThrusterManager::Vector6d ThrusterManager::minWrench() const
 {
-  Vector6d wrench;
-  wrench.setZero();
+  Vector6d min_wrench;
+  min_wrench.setZero();
   const auto thrust{fmin};
 
   for(size_t dir = 0; dir < 6; ++dir)
   {
     for(uint thr = 0; thr < dofs; ++thr)
-      wrench(dir) += thrust * std::abs(tam(dir, thr));
+      min_wrench(dir) += thrust * std::abs(tam(dir, thr));
   }
-  return wrench;
+  return min_wrench;
 }
 
 //ThrusterManager::Vector6d ThrusterManager::comandableWrenchBounds
